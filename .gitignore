@@ -32,6 +32,7 @@ ExportedObj/
 sysinfo.txt
 
 # Unneeded Unity files
+# Use this ignore only when I want to track my .cs edits
 *.meta
 *.ogg
 *.asset
