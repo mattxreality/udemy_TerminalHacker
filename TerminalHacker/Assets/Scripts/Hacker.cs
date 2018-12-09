@@ -58,6 +58,17 @@ public class Hacker : MonoBehaviour {
         }
         else if (currentScreen == Screen.Password)
         {
+            switch(level)
+            {
+                case 1:
+                    Trylvl1(input);
+                    break;
+                case 2:
+                    Trylvl2(input);
+                    break;
+            }
+            
+            /*
             if (level == 1)
             {
                 Trylvl1(input);
@@ -66,6 +77,7 @@ public class Hacker : MonoBehaviour {
             {
                 Trylvl2(input);
             }
+            */
         }
  
     }
@@ -79,21 +91,6 @@ public class Hacker : MonoBehaviour {
             level = int.Parse(input);
             StartGame();
         }
-
-        /*
-        if (input == "1")
-        {
-            level = 1;
-            lvlGreeting = ". You have selected to hack the library. Foolish mortal...";
-            StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            lvlGreeting = ". You have selected to hack the PD. Limited resistance expected.";
-            StartGame();
-        }
-        */
         else
         {
             Terminal.WriteLine("Please make a valid selection");
@@ -103,9 +100,26 @@ public class Hacker : MonoBehaviour {
     void StartGame()
     {
         currentScreen = Screen.Password;
-        //Terminal.WriteLine("You have chosen level " + level + lvlGreeting);
         randomNum = UnityEngine.Random.Range(0, 4);
 
+        switch(level)
+        {
+            case 1:
+                lvl1Encrypt = passwordArraylvl1[randomNum, 0];
+                lvl1Answer = passwordArraylvl1[randomNum, 1];
+                Terminal.WriteLine("Encrypted password = " + lvl1Encrypt);
+                Terminal.WriteLine("Hack the password.");
+                break;
+            case 2:
+                lvl2Encrypt = passwordArraylvl2[randomNum, 0];
+                lvl2Answer = passwordArraylvl2[randomNum, 1];
+                Terminal.WriteLine("Encrypted password = " + lvl2Encrypt);
+                Terminal.WriteLine("Hack the password.");
+                break;
+            default:
+                break;
+        }
+        /*
         if (level == 1)
         {
             lvl1Encrypt = passwordArraylvl1[randomNum, 0];
@@ -120,7 +134,8 @@ public class Hacker : MonoBehaviour {
             Terminal.WriteLine("Encrypted password = " + lvl2Encrypt);
             Terminal.WriteLine("Hack the password.");
         }
-      
+        */
+
     }
     void Trylvl1(string input)
     {
