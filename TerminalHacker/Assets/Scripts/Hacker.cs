@@ -10,6 +10,12 @@ public class Hacker : MonoBehaviour {
     public string[,] passwordArraylvl1 = new string[,] { { "arlybri", "library" }, { "enifmist", "feminist" }, { "agenv", "vegan" }, { "adornedot", "deodorant" } };
     public string[,] passwordArraylvl2 = new string[,] { { "aimilncr", "criminal" }, { "odtun", "donut" }, { "ferritingnp", "fingerprint" }, { "chadsnuff", "handcuffs" } };
 
+    int[] arrayOne = new int[] { 1, 2, 3, 4, 5, 6 };
+    int[] arrayTwo;
+
+
+    public string[] singleArray = new string[] {"farm", "tuckit", "spanky"};
+
     //game state. Changes as game is played.
     int level;
     string lvlGreeting;
@@ -17,7 +23,8 @@ public class Hacker : MonoBehaviour {
     string lvl1Answer;
     string lvl2Encrypt;
     string lvl2Answer;
-    int randomNum;
+    int lvl1Index;
+    int lvl2Index;
 
     enum Screen { MainMenu, Password, Win };
     Screen currentScreen;
@@ -30,8 +37,16 @@ public class Hacker : MonoBehaviour {
     {
         ShowMainMenu();
         print(number);
+        print("passwordArraylvl1 dimension0 " + passwordArraylvl1.GetLength(0));
+        print("passwordArraylvl1 dimension1 " + passwordArraylvl1.GetLength(1));
+        print("singleArray Rank " + singleArray.Rank);
     }
 
+    private void Update()
+    {
+        lvl1Index = UnityEngine.Random.Range(0, passwordArraylvl1.GetLength(0));
+        print("lvl1Index = " + lvl1Index);
+    }
     void ShowMainMenu()
     {
         Terminal.ClearScreen();
@@ -65,6 +80,9 @@ public class Hacker : MonoBehaviour {
                     break;
                 case 2:
                     Trylvl2(input);
+                    break;
+                default:
+                    Debug.LogError("Invalid level number");
                     break;
             }
             
@@ -100,19 +118,20 @@ public class Hacker : MonoBehaviour {
     void StartGame()
     {
         currentScreen = Screen.Password;
-        randomNum = UnityEngine.Random.Range(0, 4);
+        lvl1Index = UnityEngine.Random.Range(0, passwordArraylvl1.GetLength(0));
+        lvl2Index = UnityEngine.Random.Range(0, passwordArraylvl2.GetLength(0));
 
-        switch(level)
+        switch (level)
         {
             case 1:
-                lvl1Encrypt = passwordArraylvl1[randomNum, 0];
-                lvl1Answer = passwordArraylvl1[randomNum, 1];
+                lvl1Encrypt = passwordArraylvl1[lvl1Index, 0];
+                lvl1Answer = passwordArraylvl1[lvl1Index, 1];
                 Terminal.WriteLine("Encrypted password = " + lvl1Encrypt);
                 Terminal.WriteLine("Hack the password.");
                 break;
             case 2:
-                lvl2Encrypt = passwordArraylvl2[randomNum, 0];
-                lvl2Answer = passwordArraylvl2[randomNum, 1];
+                lvl2Encrypt = passwordArraylvl2[lvl2Index, 0];
+                lvl2Answer = passwordArraylvl2[lvl2Index, 1];
                 Terminal.WriteLine("Encrypted password = " + lvl2Encrypt);
                 Terminal.WriteLine("Hack the password.");
                 break;
@@ -137,17 +156,23 @@ public class Hacker : MonoBehaviour {
         */
 
     }
+
     void Trylvl1(string input)
     {
         if (input == lvl1Answer)
         {
             currentScreen = Screen.Win;
-            Terminal.WriteLine("You Win!!");
+            DisplayWinScreen();
         }
         else
         {
             Terminal.WriteLine("Wrong! The sushi is spoiled! Try AGAIN!");
         }
+    }
+
+    private static void DisplayWinScreen()
+    {
+        Terminal.WriteLine("You Win!!");
     }
 
     void Trylvl2(string input)
