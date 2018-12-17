@@ -84,7 +84,7 @@ public class Hacker : MonoBehaviour {
         Terminal.WriteLine("Press 1 for the local library");
         Terminal.WriteLine("Press 2 for the police department");
         Terminal.WriteLine("Press 3 for cloud services");
-        ReturnToMenu();
+        Terminal.WriteLine("Enter your selection:");
     }
 
     void ReturnToMenu()
